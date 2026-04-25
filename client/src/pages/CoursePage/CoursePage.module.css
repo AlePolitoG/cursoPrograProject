@@ -1,0 +1,91 @@
+.page {
+  max-width: var(--container-max);
+  margin: var(--space-8) var(--gutter) var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+@media (min-width: 1310px) {
+  .page { margin-inline: auto; }
+}
+
+.back {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  padding: var(--space-2) 0;
+  transition: color var(--t-fast) var(--ease-out);
+}
+
+.back:hover { color: var(--accent); }
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 70ch;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  font-weight: 400;
+  font-variation-settings: 'SOFT' 30, 'opsz' 144;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.85);
+}
+
+.tagline {
+  color: var(--text-secondary);
+  font-size: var(--fs-lg);
+  max-width: 60ch;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+}
+
+.progressHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.progressLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.progressValue {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+}
+
+.progressValue strong { color: var(--text-primary); font-weight: 700; }
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}

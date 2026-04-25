@@ -1,0 +1,237 @@
+html { background: var(--retro-void); }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  color: var(--text-primary);
+  /* Transparent — the fixed RetroBackground canvas (z-index:-1) paints the
+     page. The fallback on <html> avoids a white flash before mount. */
+  background: transparent;
+  font-feature-settings: 'ss01' on, 'ss02' on;
+  font-variation-settings: 'SOFT' 30, 'opsz' 14;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+h1 { font-variation-settings: 'SOFT' 40, 'opsz' 120; }
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: var(--fs-xs);
+}
+
+a { transition: color var(--t-fast) var(--ease-out); }
+a:hover { color: var(--accent); }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-hairline);
+  margin: var(--space-8) 0;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  transition: border-color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
+}
+
+input::placeholder, textarea::placeholder { color: var(--text-muted); }
+
+input:hover, textarea:hover, select:hover {
+  border-color: var(--border-strong);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface-elevated);
+}
+
+label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RETRO / ARCADE LAYER
+   ───────────────────────────────────────────────────────────── */
+
+/* Pixel cursor — global. Falls back gracefully on platforms that ignore it. */
+html, body { cursor: var(--cursor-arrow); }
+a, button, [role='button'], summary, label[for], select { cursor: var(--cursor-pointer); }
+input, textarea { cursor: var(--cursor-text); }
+
+/* Neon selection */
+::selection {
+  background: var(--retro-magenta);
+  color: var(--retro-void);
+  text-shadow: none;
+}
+
+/* Glass panel — semi-opaque dark surface that floats over the canvas
+   background to keep dense text legible without losing the synthwave vibe.
+   Intentionally darker than typical "glassmorphism" because the background
+   is a high-contrast animated grid. */
+.glass-panel {
+  background: rgba(10, 4, 32, 0.78);
+  border: 2px solid rgba(46, 240, 255, 0.18);
+  backdrop-filter: saturate(140%) blur(4px);
+  -webkit-backdrop-filter: saturate(140%) blur(4px);
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 24px rgba(46, 240, 255, 0.18),
+    inset 1px 1px 0 0 rgba(255, 255, 255, 0.04);
+  padding: var(--space-8) var(--space-6);
+}
+@media (min-width: 880px) {
+  .glass-panel { padding: var(--space-10) var(--space-12); }
+}
+
+/* Cheap heading lift — applied automatically to non-arcade headings inside
+   the panel. Pages with their own neon shadow recipe (DashboardPage .title)
+   match `[class*="title"]` and opt out. */
+.glass-panel :is(h1, h2, h3):not([class*="title"]) {
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.85);
+}
+.glass-panel :is(p, span, li):not([class*="title"]):not(.caret) {
+  /* subtle baseline shadow for body copy on busy backgrounds */
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+/* Reusable bevel utility — chunky 8-bit border feel */
+.bevel {
+  box-shadow: var(--bevel-outset);
+  image-rendering: pixelated;
+}
+.bevel-inset { box-shadow: var(--bevel-inset); }
+
+/* Sharp pixel rendering for elements that opt in (sprite-style) */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Arcade press button — chunky, satisfying physical click */
+.btn-arcade {
+  --press-color: var(--retro-cyan);
+  --press-glow: rgba(46, 240, 255, 0.55);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  padding: 14px 22px;
+  background: var(--retro-deep);
+  color: var(--press-color);
+  border: 2px solid var(--press-color);
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 0 0 6px var(--press-glow);
+  cursor: var(--cursor-pointer);
+  user-select: none;
+  transform: translateY(0);
+  box-shadow:
+    0 var(--press-distance) 0 0 #000,
+    0 calc(var(--press-distance) + 2px) 0 0 rgba(0, 0, 0, 0.6),
+    0 0 0 2px #000,
+    0 0 14px var(--press-glow),
+    inset 1px 1px 0 0 rgba(255, 255, 255, 0.18);
+  transition:
+    transform 90ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 140ms,
+    background 140ms;
+  will-change: transform;
+}
+.btn-arcade:hover {
+  background: color-mix(in oklab, var(--retro-deep), var(--press-color) 12%);
+  box-shadow:
+    0 var(--press-distance) 0 0 #000,
+    0 calc(var(--press-distance) + 2px) 0 0 rgba(0, 0, 0, 0.6),
+    0 0 0 2px #000,
+    0 0 22px var(--press-glow),
+    0 0 48px var(--press-glow),
+    inset 1px 1px 0 0 rgba(255, 255, 255, 0.32);
+}
+.btn-arcade:active {
+  transform: translateY(var(--press-distance));
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 18px var(--press-glow),
+    inset 1px 1px 0 0 rgba(255, 255, 255, 0.18);
+}
+.btn-arcade:focus-visible {
+  outline: 2px dashed var(--press-color);
+  outline-offset: 4px;
+}
+.btn-arcade.magenta { --press-color: var(--retro-magenta); --press-glow: rgba(255, 43, 214, 0.55); }
+.btn-arcade.yellow  { --press-color: var(--retro-yellow);  --press-glow: rgba(255, 210, 63, 0.55); color: var(--retro-yellow); }
+.btn-arcade.lime    { --press-color: var(--retro-lime);    --press-glow: rgba(166, 255, 0, 0.5); color: var(--retro-lime); }
+
+/* Blinking caret for typewriter dialogue */
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  margin-left: 0.12em;
+  vertical-align: -0.12em;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: caret-blink 1s steps(2, end) infinite;
+}
+@keyframes caret-blink {
+  to { opacity: 0; }
+}
+
+/* CRT scanline overlay — fixed, non-interactive, very subtle */
+.crt-scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+.crt-scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    120% 90% at 50% 50%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* Reduced motion: kill the heavy animations */
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+}

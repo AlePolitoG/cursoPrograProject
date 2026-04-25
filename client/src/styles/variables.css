@@ -1,0 +1,141 @@
+:root {
+  color-scheme: dark;
+
+  /* Superficies */
+  --surface-ink: #0a0a0b;
+  --surface-paper: #131316;
+  --surface-raised: #1b1b20;
+  --surface-elevated: #24242c;
+  --surface-hairline: #2d2d36;
+
+  /* Texto */
+  --text-primary: #f0e9d8;
+  --text-secondary: #ada693;
+  --text-muted: #6e685c;
+  --text-on-accent: #1a0f02;
+
+  /* Bordes */
+  --border-hairline: rgba(240, 233, 216, 0.08);
+  --border-strong: rgba(240, 233, 216, 0.18);
+
+  /* Acento */
+  --accent: #e8a33b;
+  --accent-strong: #f4b14a;
+  --accent-soft: rgba(232, 163, 59, 0.14);
+  --accent-ink: rgba(232, 163, 59, 0.5);
+
+  /* Estados */
+  --danger: #e07567;
+  --success: #8bbf6b;
+
+  /* Tipografía */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 2rem;
+  --fs-3xl: 2.75rem;
+  --fs-4xl: clamp(2.75rem, 6vw + 1rem, 5rem);
+
+  /* Espaciado */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Radios */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* Capas */
+  --z-header: 20;
+  --z-overlay: 40;
+
+  /* Transiciones */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 120ms;
+  --t-base: 220ms;
+  --t-slow: 420ms;
+
+  /* Layout */
+  --container-max: 1240px;
+  --container-prose: 68ch;
+  --gutter: clamp(1.25rem, 4vw, 2.75rem);
+
+  /* Breakpoints de referencia:
+     --bp-sm: 480px; --bp-md: 768px; --bp-lg: 1024px; --bp-xl: 1280px. */
+
+  /* ─────────────────────────────────────────────────────────────
+     RETRO / ARCADE TOKENS
+     Layered on top of the editorial palette. The retro skin opts in
+     via .arcade scope on a page or via direct token usage on a component.
+     ───────────────────────────────────────────────────────────── */
+
+  /* Synthwave palette */
+  --retro-void: #06010f;
+  --retro-deep: #0a0420;
+  --retro-purple: #2b0b54;
+  --retro-magenta: #ff2bd6;
+  --retro-pink: #ff5fa2;
+  --retro-cyan: #2ef0ff;
+  --retro-electric: #6affff;
+  --retro-yellow: #ffd23f;
+  --retro-lime: #a6ff00;
+  --retro-crt: #d8f8ff;
+
+  /* Glows (used in box-shadow / drop-shadow) */
+  --glow-magenta: 0 0 12px rgba(255, 43, 214, 0.65), 0 0 32px rgba(255, 43, 214, 0.35);
+  --glow-cyan:    0 0 12px rgba(46, 240, 255, 0.65), 0 0 32px rgba(46, 240, 255, 0.35);
+  --glow-yellow:  0 0 10px rgba(255, 210, 63, 0.6),  0 0 28px rgba(255, 210, 63, 0.3);
+  --glow-soft-cyan: 0 0 6px rgba(46, 240, 255, 0.45);
+
+  /* Pixel typography */
+  --font-pixel: 'Press Start 2P', 'VT323', ui-monospace, monospace;
+  --font-crt:   'VT323', ui-monospace, monospace;
+
+  /* 8-bit bevel: 4 inset shadows mimic chiseled chunky borders.
+     Apply via the .bevel utility, or inline when nesting needs.       */
+  --bevel-light: rgba(255, 255, 255, 0.22);
+  --bevel-light-strong: rgba(255, 255, 255, 0.45);
+  --bevel-dark: rgba(0, 0, 0, 0.6);
+  --bevel-dark-strong: rgba(0, 0, 0, 0.85);
+
+  --bevel-outset:
+    inset 2px 2px 0 0 var(--bevel-light-strong),
+    inset -2px -2px 0 0 var(--bevel-dark-strong),
+    inset 4px 4px 0 0 var(--bevel-light),
+    inset -4px -4px 0 0 var(--bevel-dark);
+
+  --bevel-inset:
+    inset 2px 2px 0 0 var(--bevel-dark-strong),
+    inset -2px -2px 0 0 var(--bevel-light-strong),
+    inset 4px 4px 0 0 var(--bevel-dark),
+    inset -4px -4px 0 0 var(--bevel-light);
+
+  /* Press feel — physical button drop shadow + repositioning amount */
+  --press-shadow-rest: 0 6px 0 0 var(--retro-void), 0 8px 0 0 rgba(0, 0, 0, 0.85);
+  --press-shadow-down: 0 1px 0 0 var(--retro-void), 0 2px 0 0 rgba(0, 0, 0, 0.85);
+  --press-distance: 4px;
+
+  /* Pixelated cursors — inlined SVG, shape-rendering: crispEdges       */
+  --cursor-arrow: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='24' shape-rendering='crispEdges'><path d='M2 1 L2 18 L7 14 L10 22 L13 21 L10 13 L17 13 Z' fill='%23ffffff' stroke='%23000000' stroke-width='2' stroke-linejoin='miter'/></svg>") 2 1, auto;
+  --cursor-pointer: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='26' shape-rendering='crispEdges'><path d='M2 1 L2 18 L7 14 L10 22 L13 21 L10 13 L17 13 Z' fill='%232ef0ff' stroke='%23000000' stroke-width='2' stroke-linejoin='miter'/></svg>") 2 1, pointer;
+  --cursor-text: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='18' shape-rendering='crispEdges'><rect x='0' y='0' width='10' height='2' fill='%23000'/><rect x='1' y='1' width='8' height='1' fill='%23fff'/><rect x='4' y='2' width='2' height='14' fill='%23000'/><rect x='4' y='3' width='1' height='12' fill='%23fff'/><rect x='0' y='16' width='10' height='2' fill='%23000'/><rect x='1' y='16' width='8' height='1' fill='%23fff'/></svg>") 5 9, text;
+}

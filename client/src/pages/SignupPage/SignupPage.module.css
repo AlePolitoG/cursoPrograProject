@@ -1,0 +1,101 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+
+.field label {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  color: var(--retro-cyan);
+  text-shadow: var(--glow-soft-cyan);
+  margin-bottom: 0;
+}
+
+.field input {
+  width: 100%;
+  background: rgba(6, 1, 15, 0.85);
+  border: 2px solid var(--retro-cyan);
+  border-radius: 0;
+  color: var(--retro-electric);
+  font-family: var(--font-crt);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--bevel-inset);
+  caret-color: var(--retro-magenta);
+  transition:
+    border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.field input::placeholder {
+  color: rgba(216, 248, 255, 0.45);
+  font-family: var(--font-crt);
+}
+
+.field input:hover {
+  border-color: var(--retro-electric);
+}
+
+.field input:focus {
+  outline: none;
+  background: rgba(6, 1, 15, 0.92);
+  border-color: var(--retro-magenta);
+  box-shadow:
+    var(--bevel-inset),
+    0 0 0 2px #000,
+    0 0 16px rgba(255, 43, 214, 0.55);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 560px) {
+  .row { grid-template-columns: 1fr 1fr; }
+}
+
+.error {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  color: var(--retro-magenta);
+  background: rgba(40, 4, 24, 0.85);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--retro-magenta);
+  border-radius: 0;
+  text-shadow: 0 0 6px rgba(255, 43, 214, 0.55);
+  box-shadow: 0 0 0 2px #000, 0 0 14px rgba(255, 43, 214, 0.35);
+}
+.error::before { content: '⚠ '; }
+
+.submit { width: 100%; }
+
+.alt {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--retro-crt);
+  text-align: center;
+  margin-top: var(--space-2);
+  line-height: 2;
+}
+
+.alt a {
+  color: var(--retro-cyan);
+  text-shadow: var(--glow-soft-cyan);
+  border-bottom: 2px solid var(--retro-cyan);
+  padding-bottom: 2px;
+  transition: color 160ms, border-color 160ms, text-shadow 160ms;
+}
+.alt a:hover {
+  color: var(--retro-magenta);
+  border-bottom-color: var(--retro-magenta);
+  text-shadow: 0 0 6px rgba(255, 43, 214, 0.7);
+}

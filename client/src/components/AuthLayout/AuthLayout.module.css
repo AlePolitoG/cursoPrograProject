@@ -1,0 +1,114 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: calc(100vh - 200px);
+  max-width: var(--container-max);
+  margin: var(--space-8) var(--gutter) var(--space-12);
+  gap: var(--space-8);
+}
+@media (min-width: 1310px) {
+  .wrap { margin-inline: auto; }
+}
+
+.pane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) 0;
+}
+
+.paneInner {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.eyebrow {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--retro-yellow);
+  text-shadow: var(--glow-yellow);
+}
+
+.title {
+  font-family: var(--font-pixel);
+  font-size: clamp(1.1rem, 2.4vw + 0.4rem, 1.6rem);
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--retro-electric);
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 0 4px rgba(106, 255, 255, 0.9),
+    0 0 14px rgba(46, 240, 255, 0.55),
+    3px 3px 0 #ff2bd6;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: var(--font-crt);
+  font-size: 1.3rem;
+  line-height: 1.35;
+  color: var(--retro-crt);
+  text-shadow: 0 0 6px rgba(216, 248, 255, 0.5);
+  max-width: 48ch;
+  margin: 0;
+}
+
+.form { margin-top: var(--space-3); }
+
+.aside {
+  display: none;
+  position: relative;
+  border-left: 2px dashed rgba(46, 240, 255, 0.25);
+}
+
+.asideInner {
+  padding: var(--space-10) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  height: 100%;
+  justify-content: center;
+  max-width: 52ch;
+}
+
+.asideEyebrow {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--retro-magenta);
+  text-shadow: var(--glow-magenta);
+}
+
+.quote {
+  font-family: var(--font-crt);
+  font-size: 1.7rem;
+  line-height: 1.25;
+  color: var(--retro-crt);
+  text-shadow: 0 0 8px rgba(216, 248, 255, 0.45);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.asideNote {
+  font-family: var(--font-crt);
+  font-size: 1.05rem;
+  color: var(--retro-electric);
+  opacity: 0.85;
+  max-width: 36ch;
+  margin: 0;
+}
+
+@media (min-width: 960px) {
+  .wrap {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: calc(100vh - 220px);
+  }
+  .aside { display: block; }
+}
