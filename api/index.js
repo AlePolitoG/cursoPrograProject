@@ -14,7 +14,7 @@ function prepareEnvironment(req) {
     (!process.env.CORS_ORIGIN || process.env.CORS_ORIGIN.includes('TU-PROYECTO')) &&
     (vercelOrigin || requestOrigin)
   ) {
-    process.env.CORS_ORIGIN = vercelOrigin || requestOrigin;
+    process.env.CORS_ORIGIN = requestOrigin || vercelOrigin;
   }
 
   // Keeps the demo bootable on Vercel. Set a real JWT_SECRET in Vercel
