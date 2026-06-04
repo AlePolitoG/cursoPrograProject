@@ -4,14 +4,17 @@ const path = require('node:path');
 const TMP_DB_PATH = '/tmp/curso-progra.db';
 let appPromise;
 
-function prepareEnvironment() {
+function prepareEnvironment(req) {
   process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+
+  const requestOrigin = req.headers.host ? `https://${req.headers.host}` : null;
+  const vercelOrigin = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null;
 
   if (
     (!process.env.CORS_ORIGIN || process.env.CORS_ORIGIN.includes('TU-PROYECTO')) &&
-    process.env.VERCEL_URL
+    (vercelOrigin || requestOrigin)
   ) {
-    process.env.CORS_ORIGIN = `https://${process.env.VERCEL_URL}`;
+    process.env.CORS_ORIGIN = vercelOrigin || requestOrigin;
   }
 
   // Keeps the demo bootable on Vercel. Set a real JWT_SECRET in Vercel
@@ -43,9 +46,9 @@ function restoreOriginalApiPath(req) {
   req.url = `/api/${rewrittenPath}${query ? `?${query}` : ''}`;
 }
 
-async function getApp() {
+async function getApp(req) {
   if (!appPromise) {
-    prepareEnvironment();
+    prepareEnvironment(req);
     prepareSqliteDatabase();
     appPromise = import('../server/src/app.js').then((mod) => mod.app);
   }
@@ -55,6 +58,6 @@ async function getApp() {
 
 module.exports = async function handler(req, res) {
   restoreOriginalApiPath(req);
-  const app = await getApp();
+  const app = await getApp(req);
   return app(req, res);
 };
