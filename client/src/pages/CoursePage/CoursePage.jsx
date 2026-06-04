@@ -38,7 +38,7 @@ export function CoursePage() {
 
       <div className={styles.sections}>
         {track.sections.map((section, i) => (
-          <LessonList key={section.id} section={section} index={i} />
+          <LessonList key={section.id} section={section} index={i} trackId={track.id} />
         ))}
       </div>
     </div>

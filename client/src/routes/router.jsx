@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/LoginPage/LoginPage.jsx';
 import { SignupPage } from '../pages/SignupPage/SignupPage.jsx';
 import { DashboardPage } from '../pages/DashboardPage/DashboardPage.jsx';
 import { CoursePage } from '../pages/CoursePage/CoursePage.jsx';
+import { LessonPage } from '../pages/LessonPage/LessonPage.jsx';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage.jsx';
 import { RouteError } from '../pages/NotFoundPage/RouteError.jsx';
 
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
         children: [
           { path: 'dashboard', element: <DashboardPage /> },
           { path: 'courses/:trackId', element: <CoursePage /> },
+          { path: 'courses/:trackId/lessons/:lessonId', element: <LessonPage /> },
         ],
       },
       { path: '*', element: <NotFoundPage /> },

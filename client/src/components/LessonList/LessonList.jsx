@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
 import { useProgress } from '../../hooks/useProgress.js';
 import styles from './LessonList.module.css';
 
-export function LessonList({ section, index }) {
+export function LessonList({ section, index, trackId }) {
   const { isComplete, toggle } = useProgress();
 
   return (
@@ -31,7 +32,16 @@ export function LessonList({ section, index }) {
 
               <div className={styles.body}>
                 <span className={styles.order}>{String(i + 1).padStart(2, '0')}</span>
-                <span className={styles.title}>{lesson.title}</span>
+                {trackId ? (
+                  <Link
+                    to={`/courses/${trackId}/lessons/${lesson.id}`}
+                    className={styles.titleLink}
+                  >
+                    {lesson.title}
+                  </Link>
+                ) : (
+                  <span className={styles.title}>{lesson.title}</span>
+                )}
               </div>
 
               <span className={styles.minutes}>{lesson.minutes} min</span>

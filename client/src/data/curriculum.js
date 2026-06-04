@@ -149,3 +149,21 @@ export const getLessonIdFromIndex = (courseId, lessonIndex) => {
   }
   return null;
 };
+
+export const findLessonContext = (lessonId) => {
+  for (const track of curriculum) {
+    const flat = track.sections.flatMap((s) =>
+      s.lessons.map((l) => ({ ...l, section: s }))
+    );
+    const idx = flat.findIndex((l) => l.id === lessonId);
+    if (idx === -1) continue;
+    return {
+      track,
+      section: flat[idx].section,
+      lesson: flat[idx],
+      prev: idx > 0 ? flat[idx - 1] : null,
+      next: idx < flat.length - 1 ? flat[idx + 1] : null,
+    };
+  }
+  return null;
+};

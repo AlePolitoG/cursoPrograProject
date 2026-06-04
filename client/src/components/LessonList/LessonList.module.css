@@ -101,6 +101,17 @@
   color: var(--text-primary);
 }
 
+.titleLink {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  color: inherit;
+  text-decoration: none;
+}
+
+.titleLink:hover {
+  color: var(--accent);
+}
+
 .minutes {
   font-family: var(--font-mono);
   font-size: var(--fs-xs);

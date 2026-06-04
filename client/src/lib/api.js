@@ -34,8 +34,8 @@ async function fetchApi(endpoint, options = {}) {
   if (!response.ok) {
     throw new ApiError(
       response.status,
-      data?.error?.message || 'API request failed',
-      data?.error?.details
+      (typeof data?.error === 'string' ? data.error : data?.error?.message) || 'API request failed',
+      data?.details ?? data?.error?.details
     );
   }
 

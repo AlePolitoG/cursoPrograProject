@@ -6,7 +6,13 @@
       "Bash(curl -s http://localhost:5174/)",
       "Bash(curl -s http://localhost:5174/src/components/animations/InteractiveCourseSphere/InteractiveCourseSphere.jsx)",
       "Bash(kill %1)",
-      "Bash(wait)"
+      "Bash(wait)",
+      "Bash(xargs cat -n)",
+      "Bash(node -e \"import\\('./src/lib/prisma.js'\\).then\\(m => m.prisma.user.findFirst\\(\\)\\).then\\(r => console.log\\('DB OK', r\\)\\).catch\\(e => console.error\\('DB ERROR', e.message\\)\\)\")",
+      "Bash(DATABASE_URL=\"file:./prisma/dev.db\" node *)",
+      "Bash(DATABASE_URL=\"file:$\\(pwd\\)/prisma/dev.db\" npx prisma db push)",
+      "Bash(xargs ls -la)",
+      "Bash(node *)"
     ]
   }
 }
