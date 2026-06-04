@@ -7,7 +7,10 @@ let appPromise;
 function prepareEnvironment() {
   process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-  if (!process.env.CORS_ORIGIN && process.env.VERCEL_URL) {
+  if (
+    (!process.env.CORS_ORIGIN || process.env.CORS_ORIGIN.includes('TU-PROYECTO')) &&
+    process.env.VERCEL_URL
+  ) {
     process.env.CORS_ORIGIN = `https://${process.env.VERCEL_URL}`;
   }
 
