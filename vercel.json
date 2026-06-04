@@ -4,7 +4,7 @@
   "outputDirectory": "client/dist",
   "functions": {
     "api/[...path].js": {
-      "includeFiles": "server/prisma/**"
+      "includeFiles": "{server/prisma/**,server/node_modules/.prisma/**,server/node_modules/@prisma/client/**,server/node_modules/bcrypt/**}"
     }
   },
   "rewrites": [

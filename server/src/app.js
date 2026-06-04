@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 
 import { env } from './lib/env.js';
+import { prisma } from './lib/prisma.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import { asyncHandler } from './lib/httpError.js';
 import { stripeWebhook } from './controllers/billingController.js';
@@ -36,8 +37,11 @@ app.post(
 // JSON parser for everything else.
 app.use(express.json({ limit: '1mb' }));
 
-// Health probe — useful for load balancers and container orchestrators.
-app.get('/healthz', (_req, res) => res.json({ ok: true, env: env.NODE_ENV }));
+// Health probe — useful for local checks, Vercel functions, and debugging DB boot.
+app.get(['/healthz', '/api/healthz'], asyncHandler(async (_req, res) => {
+  await prisma.$queryRaw`SELECT 1`;
+  res.json({ ok: true, env: env.NODE_ENV, database: 'ok' });
+}));
 
 // API routes.
 app.use('/api/auth', authRoutes);
