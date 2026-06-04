@@ -1,7 +1,12 @@
 {
-  "installCommand": "npm install --include=dev --prefix client",
+  "installCommand": "npm install --include=dev --prefix client && npm install --include=dev --prefix server && npm run prisma:generate --prefix server",
   "buildCommand": "npm run build --prefix client",
   "outputDirectory": "client/dist",
+  "functions": {
+    "api/[...path].js": {
+      "includeFiles": "server/prisma/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
