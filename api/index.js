@@ -26,8 +26,18 @@ function prepareSqliteDatabase() {
   if (fs.existsSync(TMP_DB_PATH)) return;
 
   const bundledDbPath = path.resolve(__dirname, '../server/prisma/dev.db');
-
   fs.copyFileSync(bundledDbPath, TMP_DB_PATH);
+}
+
+function restoreOriginalApiPath(req) {
+  const requestUrl = new URL(req.url, 'http://vercel.local');
+  const rewrittenPath = requestUrl.searchParams.get('path');
+
+  if (!rewrittenPath) return;
+
+  requestUrl.searchParams.delete('path');
+  const query = requestUrl.searchParams.toString();
+  req.url = `/api/${rewrittenPath}${query ? `?${query}` : ''}`;
 }
 
 async function getApp() {
@@ -41,6 +51,7 @@ async function getApp() {
 }
 
 module.exports = async function handler(req, res) {
+  restoreOriginalApiPath(req);
   const app = await getApp();
   return app(req, res);
 };

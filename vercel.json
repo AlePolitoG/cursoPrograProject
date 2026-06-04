@@ -3,14 +3,14 @@
   "buildCommand": "npm run build --prefix client",
   "outputDirectory": "client/dist",
   "functions": {
-    "api/[...path].js": {
+    "api/index.js": {
       "includeFiles": "{server/prisma/**,server/node_modules/.prisma/**,server/node_modules/@prisma/client/**,server/node_modules/bcrypt/**}"
     }
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "source": "/api/:path*",
+      "destination": "/api?path=:path*"
     },
     {
       "source": "/(.*)",
