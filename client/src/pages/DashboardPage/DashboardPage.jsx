@@ -1,4 +1,5 @@
-import { Suspense, lazy, useMemo } from 'react';
+import { Suspense, lazy, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { CourseCard } from '../../components/CourseCard/CourseCard.jsx';
 import { CheckoutButton } from '../../components/CheckoutButton/CheckoutButton.jsx';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar.jsx';
@@ -16,6 +17,17 @@ const InteractiveCourseSphere = lazy(() =>
 export function DashboardPage() {
   const { user } = useAuth();
   const { completed } = useProgress();
+
+  // Banner de felicitaciones tras un pago exitoso (?checkout=success).
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [showCongrats, setShowCongrats] = useState(searchParams.get('checkout') === 'success');
+
+  const dismissCongrats = () => {
+    setShowCongrats(false);
+    // Limpia el parámetro de la URL para que no reaparezca al recargar.
+    searchParams.delete('checkout');
+    setSearchParams(searchParams, { replace: true });
+  };
 
   const totals = useMemo(() => {
     const allLessons = curriculum.flatMap((t) => t.sections.flatMap((s) => s.lessons));
@@ -42,6 +54,26 @@ export function DashboardPage() {
 
   return (
     <div className={`${styles.page} glass-panel`}>
+      {showCongrats && (
+        <div className={styles.congrats} role="status">
+          <span className={styles.congratsIcon} aria-hidden="true">🎉</span>
+          <div className={styles.congratsText}>
+            <p className={styles.congratsTitle}>¡FELICIDADES! YA SOS PRO ★</p>
+            <p className={styles.congratsSub}>
+              Pago confirmado. Todas las lecciones quedaron desbloqueadas. ¡A jugar!
+            </p>
+          </div>
+          <button
+            type="button"
+            className={styles.congratsClose}
+            onClick={dismissCongrats}
+            aria-label="Cerrar mensaje"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <header className={styles.hero}>
         <div className={styles.heroText}>
           <p className={styles.eyebrow}>
