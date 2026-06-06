@@ -3,6 +3,11 @@ import { env } from '../lib/env.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpError } from '../lib/httpError.js';
 
+// Demo mode: when real Stripe keys are absent we run a self-contained payment
+// flow (no external charge) so the product is usable in beta. As soon as
+// STRIPE_SECRET_KEY + STRIPE_PRICE_ID are provided, the real Stripe flow wins.
+const isStripeConfigured = () => Boolean(env.STRIPE_SECRET_KEY && env.STRIPE_PRICE_ID);
+
 // Lazy singleton — keeps the server bootable in dev without a Stripe key
 // and lets us throw a clearer error when billing routes are actually hit.
 let stripeClient = null;
@@ -16,14 +21,22 @@ function getStripe() {
 }
 
 /** POST /api/billing/checkout
- *  Creates (or reuses) a Stripe customer and returns a Checkout Session URL
- *  for the configured subscription price. Front-end redirects the browser
- *  to that URL.
+ *  In Stripe mode: creates (or reuses) a customer and returns a Checkout
+ *  Session URL for the browser to redirect to.
+ *  In demo mode (no Stripe keys): returns `{ mock: true, amount }` and the
+ *  client renders an in-app demo checkout page instead.
  */
 export async function createCheckoutSession(req, res) {
-  if (!env.STRIPE_PRICE_ID) {
-    throw new HttpError(503, 'Billing is not configured (missing STRIPE_PRICE_ID)');
+  if (!isStripeConfigured()) {
+    // Beta / demo: no external provider. The client routes to its own
+    // checkout page and later calls /billing/demo/confirm to activate PRO.
+    return res.json({
+      mock: true,
+      amount: env.BILLING_PRICE_USD,
+      currency: 'usd',
+    });
   }
+
   const stripe = getStripe();
   const user = req.user;
 
@@ -50,6 +63,24 @@ export async function createCheckoutSession(req, res) {
   });
 
   res.json({ url: session.url });
+}
+
+/** POST /api/billing/demo/confirm
+ *  Demo-mode only. Activates the subscription for the authenticated user
+ *  without any external charge. Hard-disabled once real Stripe keys exist,
+ *  so it can never be used to bypass a real paywall in production.
+ */
+export async function confirmDemoPayment(req, res) {
+  if (isStripeConfigured()) {
+    throw new HttpError(409, 'Demo checkout is disabled while Stripe is configured');
+  }
+
+  await prisma.user.update({
+    where: { id: req.user.id },
+    data: { isSubscribed: true },
+  });
+
+  res.json({ ok: true, isSubscribed: true });
 }
 
 /** POST /api/webhooks/stripe

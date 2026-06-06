@@ -16,7 +16,12 @@ const schema = z.object({
   BCRYPT_ROUNDS: z.coerce.number().int().min(10).max(15).default(12),
   FREE_LESSON_LIMIT: z.coerce.number().int().nonnegative().default(4),
 
+  // Subscription price shown in the UI and charged at checkout (whole USD).
+  BILLING_PRICE_USD: z.coerce.number().int().positive().default(30),
+
   // Stripe is optional in dev — only required when /webhooks/stripe is hit.
+  // When STRIPE_SECRET_KEY + STRIPE_PRICE_ID are absent, billing runs in a
+  // self-contained "demo" mode (no real charge) — see billingController.js.
   STRIPE_SECRET_KEY: z.string().optional(),
   STRIPE_WEBHOOK_SECRET: z.string().optional(),
   STRIPE_PRICE_ID: z.string().optional(),
