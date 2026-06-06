@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useProgress } from '../../hooks/useProgress.js';
+import { useAuth } from '../../hooks/useAuth.js';
+import { isLessonLocked } from '../../lib/paywall.js';
 import styles from './LessonList.module.css';
 
 export function LessonList({ section, index, trackId }) {
   const { isComplete, toggle } = useProgress();
+  const { user } = useAuth();
 
   return (
     <section className={styles.section} aria-labelledby={`sec-${section.id}`}>
@@ -15,14 +18,19 @@ export function LessonList({ section, index, trackId }) {
       <ol className={styles.list}>
         {section.lessons.map((lesson, i) => {
           const done = isComplete(lesson.id);
+          const locked = isLessonLocked(lesson.id, user?.isSubscribed);
           return (
-            <li key={lesson.id} className={`${styles.item} ${done ? styles.itemDone : ''}`}>
+            <li
+              key={lesson.id}
+              className={`${styles.item} ${done ? styles.itemDone : ''} ${locked ? styles.itemLocked : ''}`}
+            >
               <button
                 type="button"
                 className={styles.check}
                 role="checkbox"
                 aria-checked={done}
                 onClick={() => toggle(lesson.id)}
+                disabled={locked}
                 aria-label={`Marcar "${lesson.title}" como ${done ? 'pendiente' : 'completada'}`}
               >
                 <span className={styles.checkBox} aria-hidden="true">
@@ -38,9 +46,13 @@ export function LessonList({ section, index, trackId }) {
                     className={styles.titleLink}
                   >
                     {lesson.title}
+                    {locked && <span className={styles.lock} aria-label="Requiere PRO"> 🔒</span>}
                   </Link>
                 ) : (
-                  <span className={styles.title}>{lesson.title}</span>
+                  <span className={styles.title}>
+                    {lesson.title}
+                    {locked && <span className={styles.lock} aria-label="Requiere PRO"> 🔒</span>}
+                  </span>
                 )}
               </div>
 

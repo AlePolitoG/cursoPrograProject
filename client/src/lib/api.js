@@ -59,4 +59,12 @@ export const api = {
         body: JSON.stringify({ completed }),
       }),
   },
+  billing: {
+    // Inicia el cobro. Con Stripe configurado devuelve { url } (redirección
+    // externa). En modo demo devuelve { mock: true, amount, currency } y el
+    // front muestra su propia página de checkout.
+    checkout: () => fetchApi('/billing/checkout', { method: 'POST' }),
+    // Solo modo demo: confirma el "pago" simulado y activa PRO.
+    confirmDemo: () => fetchApi('/billing/demo/confirm', { method: 'POST' }),
+  },
 };

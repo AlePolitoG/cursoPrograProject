@@ -120,3 +120,14 @@
   color: var(--text-muted);
   flex-shrink: 0;
 }
+
+/* Locked (PRO) lessons */
+.itemLocked .titleLink,
+.itemLocked .title {
+  color: var(--text-muted);
+}
+
+.lock {
+  font-size: 0.85em;
+  filter: drop-shadow(0 0 6px rgba(255, 210, 63, 0.5));
+}

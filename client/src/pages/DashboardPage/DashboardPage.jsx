@@ -1,5 +1,6 @@
 import { Suspense, lazy, useMemo } from 'react';
 import { CourseCard } from '../../components/CourseCard/CourseCard.jsx';
+import { CheckoutButton } from '../../components/CheckoutButton/CheckoutButton.jsx';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar.jsx';
 import { curriculum } from '../../data/curriculum.js';
 import { useAuth } from '../../hooks/useAuth.js';
@@ -64,6 +65,7 @@ export function DashboardPage() {
           <div className={styles.heroActions}>
             <a href="#tracks" className="btn-arcade">▶ Continuar partida</a>
             <a href="#stats" className="btn-arcade magenta">High Score</a>
+            <CheckoutButton />
           </div>
         </div>
 

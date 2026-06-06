@@ -5,6 +5,7 @@ import { GuestRoute } from '../components/ProtectedRoute/GuestRoute.jsx';
 import { LoginPage } from '../pages/LoginPage/LoginPage.jsx';
 import { SignupPage } from '../pages/SignupPage/SignupPage.jsx';
 import { DashboardPage } from '../pages/DashboardPage/DashboardPage.jsx';
+import { CheckoutPage } from '../pages/CheckoutPage/CheckoutPage.jsx';
 import { CoursePage } from '../pages/CoursePage/CoursePage.jsx';
 import { LessonPage } from '../pages/LessonPage/LessonPage.jsx';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage.jsx';
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           { path: 'dashboard', element: <DashboardPage /> },
+          { path: 'checkout', element: <CheckoutPage /> },
           { path: 'courses/:trackId', element: <CoursePage /> },
           { path: 'courses/:trackId/lessons/:lessonId', element: <LessonPage /> },
         ],

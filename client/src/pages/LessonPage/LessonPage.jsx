@@ -2,6 +2,9 @@ import { Link, useParams } from 'react-router-dom';
 import { findLessonContext } from '../../data/curriculum.js';
 import { lessonContent } from '../../data/lessonContent.js';
 import { useProgress } from '../../hooks/useProgress.js';
+import { useAuth } from '../../hooks/useAuth.js';
+import { isLessonLocked, FREE_LESSON_LIMIT } from '../../lib/paywall.js';
+import { CheckoutButton } from '../../components/CheckoutButton/CheckoutButton.jsx';
 import { NotFoundPage } from '../NotFoundPage/NotFoundPage.jsx';
 import styles from './LessonPage.module.css';
 
@@ -9,6 +12,7 @@ export function LessonPage() {
   const { lessonId } = useParams();
   const context = findLessonContext(lessonId);
   const { isComplete, toggle } = useProgress();
+  const { user } = useAuth();
 
   if (!context) return <NotFoundPage />;
 
@@ -17,6 +21,36 @@ export function LessonPage() {
   const done = isComplete(lessonId);
 
   if (!content) return <NotFoundPage />;
+
+  // Paywall: contenido más allá de las lecciones gratis requiere PRO.
+  // El backend bloquea el endpoint real; acá mostramos la pantalla de upgrade.
+  if (isLessonLocked(lessonId, user?.isSubscribed)) {
+    return (
+      <div className={`${styles.page} glass-panel`}>
+        <nav className={styles.nav}>
+          <Link to="/dashboard">Panel</Link>
+          <span>/</span>
+          <Link to={`/courses/${track.id}`}>{track.title}</Link>
+          <span>/</span>
+          <span>{lesson.title}</span>
+        </nav>
+
+        <div className={styles.lockBox}>
+          <span className={styles.lockIcon} aria-hidden="true">🔒</span>
+          <p className={styles.lockEyebrow}>CONTENIDO PRO</p>
+          <h1 className={styles.lockTitle}>{lesson.title}</h1>
+          <p className={styles.lockText}>
+            Las primeras {FREE_LESSON_LIMIT + 1} lecciones de cada pista son gratis.
+            Desbloqueá esta y todo el resto del curso con el acceso PRO.
+          </p>
+          <CheckoutButton />
+          <Link to={`/courses/${track.id}`} className={styles.lockBack}>
+            ← Volver al track
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`${styles.page} glass-panel`}>
