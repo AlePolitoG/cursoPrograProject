@@ -9,7 +9,7 @@ export function Footer() {
           <span className={styles.mark}>✦</span> Curso · {year}
         </p>
         <p className={styles.meta}>
-          Construido con React, Vite y CSS nativo. Código en español, decisiones arquitectónicas explícitas.
+          &copy; {year} Monica Aldana. Todos los derechos reservados.
         </p>
       </div>
     </footer>
