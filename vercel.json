@@ -1,17 +1,8 @@
 {
-  "installCommand": "npm install --include=dev --prefix client && npm install --include=dev --prefix server && npm run prisma:generate --prefix server",
+  "installCommand": "npm install --include=dev --prefix client",
   "buildCommand": "npm run build --prefix client",
   "outputDirectory": "client/dist",
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "{server/prisma/**,server/node_modules/.prisma/**,server/node_modules/@prisma/client/**,server/node_modules/bcrypt/**}"
-    }
-  },
   "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api?path=:path*"
-    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

@@ -1,4 +1,7 @@
-const API_BASE = '/api';
+// In dev, Vite proxies /api to the local server. In production the frontend
+// is static on Vercel and the API lives on Railway, so VITE_API_URL points at
+// the absolute backend origin (e.g. https://<app>.up.railway.app/api).
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 export class ApiError extends Error {
   constructor(status, message, errors) {
